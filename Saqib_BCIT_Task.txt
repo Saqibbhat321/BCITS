@@ -1,0 +1,498 @@
+QNO.1 			
+create table Employee
+(
+empID int primary key,
+Name varchar(100) not null,
+age int,
+joiningDate date
+);
+
+alter table Employee
+add column salary decimal(10,2);
+
+QNO 2
+IF OBJECT_ID('schema_name.TempData', 'U') IS NOT NULL
+BEGIN
+    drop table schema_name.TempData;
+END
+	
+	
+QNO 3
+	create table products(
+	productID int primary key,
+	productName varchar(100) not null,
+	price decimal(10,2)????? >0 constraint
+	);
+	
+QNO 4
+	alter table OldOrders
+	rename to archivedorders ???????
+	
+QNO 5
+	create index idx_catagory on Inventory(catagory);
+
+QNO 6
+	insert into student_table(StudentID, Name, Age,Grade)
+	values(101,"Alice",20,"A");
+	
+QNO 7 
+
+	update Results r
+	set grade="B" 
+	where marks < 60;
+	
+QNO 8
+
+	Delete From Orders
+	where status ="Cancelled";
+	
+QNO 9
+	Merge into table2 as target
+	using table1 as src
+	on target.id = src.id
+	when matched then 
+	update set target.value = src.value;
+	when not Matched then
+	insert (id,value)
+	values(src.id, src.value);
+
+
+QNO 10
+	
+	csv
+QNO 11
+	 select name 
+	 from Employee 
+	 where joiningDate > '2020-01-01";
+
+	 
+QNO 12
+	select AVG(salary), MIN(salary),MAX(salary)
+	from Employee;
+	
+QNO 13
+	select * from orders 
+	where orderAmount> 1000 and status="delivered";
+
+QNO 14
+	 
+	select category, SUM(product_sold) AS total_products_sold
+	from sales
+	group by category;
+	
+QNO 15
+SELECT c.CustomerName, o.OrderID, o.OrderDetails
+FROM Customers c
+INNER JOIN Orders o ON c.CustomerID = o.CustomerID;
+	
+	
+QNO 16
+
+	SELECT c.CustomerName, o.OrderID, o.OrderDetails
+	FROM Customers c
+	LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+	
+
+QNO 17
+	SELECT c.CustomerName, o.OrderID, o.OrderDetails
+	FROM Customers c
+	LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+	
+	
+QNO 18
+	select name 
+	from employee 
+	where salary > (select AVG(salary) from Employee);
+
+QNO 19
+
+	select name 
+	from 
+	query to retrieve the orders from the orders table where order amount exceeds the avg amount for therespectiov customers
+	
+	
+QNO 20
+	select name, orders, product_name
+	
+	
+	
+						HIBERNATE AND JPA
+						
+QNO 26:
+	ORM: stands for Object Relational Mapping  A technique that maps objects
+	in programming code to relational database tables.
+	It allows developers to manipulate database entries as objects 
+	without writing direct SQL.
+	
+	Architecture of hibernate orm:
+	
+	1.session factory :Provides the sessions for interacting with the database
+	2.session: Acts as a connection to the database used to perform CRUD operations. 
+	3.transaction: Manages the atomicity of the database transactions.
+	4.query interface: Allows HQL (Hibernate Query Language) and SQL query;
+	5.configuration: Contains Hibernate settings and mappings (like XML or annotations).
+
+	
+	
+QNO 27:
+	Jpa componets
+	1. entity manager: Interfaces to manage persistence operations.
+	2. persistence unit: Defines persistence configuration (usually in application.properties).
+	3. entity: A Java class annotated with  to represent a database table.
+	4. jpql: stands for Java Persistance Query Language, Used to interact with entities using queries.
+	5. entity Transaction:Manages transactions when working with JPA.
+	
+
+QNO 28:
+	@OnetoMany :Maps a one to many relationship between entities. 
+	eg: @OneToMany(mappedBy = "parentEntity")
+		private List<ChildEntity> children;
+		
+	@OnetoOne: Maps one to one relationship 
+	eg: @OnetoOne
+		private Profile profile;
+			
+	@ManytoOne: maps many to one relationship.
+	eg: @ManyToOne
+		private Department department;
+		
+	@Entity: Marks a class as a JPA entity (a table in the database).
+	
+	EntityTransaction: Manages the transactions in JPA.
+	
+QNO 29:
+	A query language for JPA entities. It operates on entity objects 
+	rather than database tables. 
+	eg:	SELECT e FROM Employee e WHERE e.salary > 50000;
+	
+Qno 30:
+	@Query("SELECT MIN(p.price) 
+	FROM Product p")
+	
+
+QNO 31: code to connect java and database using  jpa
+	step 1:	adding the dependecy in pom.xml file:
+		JPA and Sql connector
+	step 2: configure application.properties file
+			specify url(jdbc)
+			username(sql username)
+			password(sql password)
+	step 3: Annotate entities (@Entity)
+			Entity class:
+				@Entity
+				@Table(name="database_table_name)
+				class UserEntity{
+						@Id
+						private Long id;
+						private String name;
+						...
+					}
+	step 4: define repository interface
+			public interface UserRepo extends JpaRepository<UserEntity,Long>
+	step 5: perform database operations 
+	@Autowired
+	private UserRepo repo;
+
+	public void saveProduct(UserEntity entity) {
+    repo.save(product);
+}
+		
+QNO 32: steps to connect java and database using jdbc
+
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	Connection connection = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/your_database_name",
+    "username",
+    "password"
+	);
+	Statement statement = connection.createStatement();
+	ResultSet resultSet = statement.executeQuery("SELECT * FROM Products");
+	while (resultSet.next()) {
+    System.out.println("Product ID: " + resultSet.getInt("id"));
+    System.out.println("Product Name: " + resultSet.getString("name"));
+		}
+		connection.close();
+	}
+	
+				JAVA
+QNO 33:
+	a. Polymorphism : it is one of the four pillers of object oriented programming.
+		it is combination of two greek words poly means "many" and phism mean "form",
+		Polymorphism allows objects to take multiple forms.
+		poly morphism can be achieved by :
+		
+		i.Method Overloading: when multiple methods have same name but different parameters
+		they can varry in number, type etc.
+		eg: public int add(int a, int b)
+		and public double add(int a , int b);
+		
+		ii. Method Overriding: when a subclass provides a different implementation for a 
+			method that is already defined in parent class;
+			eg: public class Dog {
+					public void sound() {
+					System.out.println("Bark");
+					}
+				}
+
+				public class Puppy extends Dog {
+				@Override
+				public void sound() {
+					System.out.println("Yip");
+					}
+				}
+	
+	b. Encapsulation: Encapsulation is the bundling of data (attributes) and methods
+       (functions) into a single unit usally in a class.
+		Access to the data is controlled through 
+		access modifiers such as private, protected and public.
+		eg:
+			public class Person{
+			private String name;   
+
+			public String getName(){
+			return name;       
+			}
+
+		public void setName(String name){
+        this.name = name;
+			}
+		}
+	
+	c. Inheritance: It is one of the four pillers of Object oriented programming,
+		it can be defined as when a class(child) inherits the properties of another 
+		class(parent) it is called inhertance.
+		it is achieved through 'extends' keyword;
+		public class Vehicle {
+			public void startEngine(){
+			System.out.println("Engine started.");
+			}
+		}
+
+		public class Car extends Vehicle{
+		}
+		public class MainClass{
+		public static void main(String[] args){
+		Vehicle vehicle = new Car();
+		vehicle.startEngine();
+		}
+	d. Abstration: Abstraction is the concept of hiding the implementation
+	   details and showing only the essential features of an object.
+	   It is achieved through abstract classes or interfaces.
+	   eg:  public abstract class Shape {
+			abstract void draw();
+			}
+
+		public class Circle extends Shape {
+		@Override
+		void draw() {
+			System.out.println("Drawing a circle.");
+			}
+		}
+		
+	e. throw: throw keyword is used to raise an exception.
+		eg:
+			public class Calci{
+			public int divde(int a ,int b)
+			{
+				throw new Exception();
+			}
+			}
+		
+QNO 34: a) equals(): it is used to compare the content of two objects.
+			it is defined in the Object class.
+			eg. String str1 = new String ("hello");
+			String str2 = new String ("hello");
+			sout(str1.equals(str2)); // output will be true
+			
+		   == A relational operator that compares memory addresses or references for
+			objects, or actual values for primitives.
+			eg: String str1 = new String("Hello");
+			  String str2 = new String("Hello");
+			  System.out.println(str1 == str2); // false different memory addresses.
+		
+	b) final: A keyword used to define constants, prevent method overriding, 
+			or inheritance. variable marked with final keyword, their values cannot be changed.
+	   
+	   finally(): A block that always executes after a try-catch block, used for cleanup code.
+		eg: try{
+				// Code
+		} catch (Exception e){
+			// Error handling
+		} finally{
+		System.out.println("it will be always executed");
+		}
+		
+	   finalize: A method called by the garbage collector before an object is destroyed.
+	   eg: @Override
+			protected void finalize() throws Throwable {
+			System.out.println("Object is being garbage collected.");
+			}
+	
+	c) Implements: it is used when a class implements an interface
+		eg:public class MyClass implements MyInterface{
+		public void mymethod()
+		{ // implementation
+		}
+		}
+		
+	   Extends: Used when a class inherits another class or when an interface inherits
+		another interface.
+		eg:
+		public class ChildClass extends ParentClass{
+			// Inherits ParentClass functionality
+		}
+	
+	dchecked and unchek exp
+	e)methods: methods are the block of code which performs a particular piece of work
+		- methods can have return type(int, void);
+		
+	  constructors: Constructors have the same name as Class name.
+		. Constructors are special methods.
+		. Constructors doesn't have return type not even void.
+	 
+	f tree
+	g @
+	
+	
+QNO 35: "syntax error "
+
+QNO 36: 10,5
+
+QNO 37: hello
+QNO 38:  true
+QNO 39: Java Programming
+QNO 40: true;
+QNO 41: 4, 	it is  2x2 Matrix so the output will be 4
+QNO 42: 1 
+QNO 43: Yes, Due to @Component spring will consider it as a spring bean.
+QNO 44: .Immutable Dependency: Dependencies are provided at the time of object creation
+		 making it possible to define the dependencies as final.
+		. Better testablilty making unit testing easier.
+		.compatibility with final keyword.
+QNO 45: Context Initialization Error: more than one beans found for Bean_name;
+QNO 46: Hello ( because method return the plain text )
+QNO 47:  api to fetch etauls by email
+QNO 48: prg convert list to set and vice versa
+
+public class ListSetConversion {
+    public static void main(String[] args) {
+      
+        List<String> list = Arrays.asList("apple", "banana", "apple", "orange");
+        Set<String> set = new HashSet<>(list);
+        System.out.println("Set: " + set);
+		
+		
+        List<String> convertedList = new ArrayList<>(set);
+        System.out.println("List: " + convertedList);
+    }
+}
+QNO 49: O(n Log n)
+QNO 50:
+public class Pattern1 {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) { // Change 3 to desired number of rows
+            for (int j = 1; j <= i; j++) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+1
+1 2
+1 2 3
+1 2 3 4 
+1 2 3 4 5 
+
+
+QNO 51:
+public class Pattern2 {
+    public static void main(String[] args) {
+        int rows = 5; 
+   
+        for (int i =1;i <=rows;i++) {
+            for (int j= 1;j<=i;j++) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+        for (int i= rows -1; i >= 1;i--){
+            for (int j = 1; j<= i; j++) {
+                System.out.print(j+ " ");
+            }
+            System.out.println();
+        }
+    }
+}
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+1 2 3 4
+1 2 3
+1 2 
+1
+QNO 51:find all sub strings of a string abc
+ 
+	import java.util.ArrayList;
+
+	public class FindSubstrings{
+    public static void main(String[] args){
+        String str = "abc";
+        ArrayList<String> substrings = new ArrayList<>();
+        
+        for (int i =0; i< str.length(); i++) {
+            for (int j = i +1; j <=str.length(); j++){
+                substrings.add(str.substring(i, j));
+            }
+        }
+        System.out.println("Substrings of '" + str + "': " + substrings);
+    }
+	}
+QNO 52: xxxxxxxxx
+QNO 53:greatest key 
+QNO 54:The DispatcherServlet is the central component in Spring MVC
+	architecture. It's part of the front controller pattern,responsible for 
+	handling all incoming HTTP requests and dispatching them to appropriate handlers. 
+QNO 55: we can return a view by following steps:
+	1.controller: annotate with @Controller or @Restcontroller
+	2.Return a View Name: Use the Model View object or return a string with the 
+	 name of the view.
+
+QNO 56: a) @Configuration: Used to define a configuration class in Spring.
+		it indicates that the class has @Bean annotated methods to define beans for 
+		the application context.
+		
+		eg: @Configuration
+			class UserConfig{
+			
+				@Bean
+				public void onfig()
+				{
+				}
+			}
+			
+		b) @Bean: This annotation is used to define beans(objects) for the application
+			context. The spring itself will handle those beans.
+		c) Dependency Injection: It's a design pattern where an object receives
+		its dependencies from an external source, rather than creating them 
+		internally. It promotes decoupling by letting you inject dependencies 
+		into classes.
+		d) IOC: It's a broader concept where the control flow of a program 
+		is inverted. The framework controls the program flow, not the developer's
+		code.
+QNO 57:
+public class PrintNumbers {
+
+    public static void printNumbers(int n) {
+        if (n <= 100) { 
+            System.out.println(n);
+            printNumbers(n + 1); 
+        }
+    }
+
+    public static void main(String[] args) {
+        printNumbers(1);
+    }
+}

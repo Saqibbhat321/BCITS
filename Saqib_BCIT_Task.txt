@@ -25,15 +25,14 @@ QNO 3
 	);
 	
 QNO 4
-	alter table OldOrders
-	rename to archivedorders ???????
+	rename table OldOrders to archivedorders;
 	
 QNO 5
 	create index idx_catagory on Inventory(catagory);
 
 QNO 6
 	insert into student_table(StudentID, Name, Age,Grade)
-	values(101,"Alice",20,"A");
+	values(101,'Alice',20,'A";
 	
 QNO 7 
 
@@ -72,7 +71,7 @@ QNO 12
 	
 QNO 13
 	select * from orders 
-	where orderAmount> 1000 and status="delivered";
+	where orderAmount> 1000 and status='delivered';
 
 QNO 14
 	 
@@ -109,6 +108,10 @@ QNO 19
 	select name 
 	from 
 	query to retrieve the orders from the orders table where order amount exceeds the avg amount for therespectiov customers
+select * from orders o
+where o.order_amount> (select AVG(order_amount) 
+			from orders
+			where customer_id =o.customer_id);
 	
 	
 QNO 20
